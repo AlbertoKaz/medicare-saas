@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: medicare_app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:alpine
+    container_name: medicare_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  mysql:
+    image: mysql:8.0
+    container_name: medicare_mysql
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: medicare
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: medicare
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  node:
+    image: node:22-alpine
+    container_name: medicare_node
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "5173:5173"
+    command: sh -c "sleep infinity"
+
+volumes:
+  mysql_data:
