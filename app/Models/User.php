@@ -48,6 +48,8 @@ class User extends Authenticatable implements PasskeyUser
             ->implode('');
     }
 
+
+
     public function clinicMemberships(): HasMany
     {
         return $this->hasMany(ClinicMembership::class);
@@ -59,6 +61,13 @@ class User extends Authenticatable implements PasskeyUser
             ->withPivot('role')
             ->withTimestamps();
     }
+
+    public function patients(): HasMany
+    {
+        return $this->hasMany(Patient::class, 'assigned_doctor_id');
+    }
+
+
 
 
 }
