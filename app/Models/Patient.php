@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\PatientStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Patient extends Model
 {
@@ -41,5 +42,10 @@ class Patient extends Model
     public function getFullNameAttribute(): string
     {
         return "$this->first_name $this->last_name";
+    }
+
+    public function activityLogs(): HasMany
+    {
+        return $this->hasMany(ActivityLog::class);
     }
 }
