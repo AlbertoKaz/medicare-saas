@@ -67,7 +67,10 @@ class User extends Authenticatable implements PasskeyUser
         return $this->hasMany(Patient::class, 'assigned_doctor_id');
     }
 
-
+    public function assignedAppointments(): HasMany
+    {
+        return $this->hasMany(Appointment::class, 'assigned_doctor_id');
+    }
 
 
 }
