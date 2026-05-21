@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\ClinicalNotes\Create as CreateClinicalNote;
 use App\Livewire\Patients\Create;
 use App\Livewire\Patients\Show as ShowPatient;
 use App\Livewire\Appointments\Create as CreateAppointment;
@@ -24,6 +25,9 @@ Route::middleware([
 
     Route::get('/patients/{patient}', ShowPatient::class)
         ->name('patients.show');
+
+    Route::get('/patients/{patient}/clinical-notes/create', CreateClinicalNote::class)
+        ->name('patients.clinical-notes.create');
 });
 
 require __DIR__.'/settings.php';
