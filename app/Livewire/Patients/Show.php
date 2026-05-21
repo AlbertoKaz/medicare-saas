@@ -3,7 +3,10 @@
 namespace App\Livewire\Patients;
 
 use App\Models\Patient;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
+use App\Actions\Patients\ChangePatientStatus;
+use App\Enums\PatientStatus;
 
 class Show extends Component
 {
@@ -23,7 +26,22 @@ class Show extends Component
         ]);
     }
 
-    public function render()
+    public function changeStatus(
+        ChangePatientStatus $changePatientStatus,
+        string $status
+    ): void {
+
+        $changePatientStatus->handle(
+            clinic: currentClinic(),
+            actor: auth()->user(),
+            patient: $this->patient,
+            newStatus: PatientStatus::from($status),
+        );
+
+        $this->patient->refresh();
+    }
+
+    public function render(): View
     {
         return view(
             'livewire.patients.show'

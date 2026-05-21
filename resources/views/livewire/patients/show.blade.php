@@ -1,3 +1,4 @@
+@php use App\Enums\PatientStatus; @endphp
 <div class="max-w-5xl mx-auto px-4 py-8">
 
     <div
@@ -40,27 +41,46 @@
 
     </div>
 
-    <div
-        class="grid lg:grid-cols-3 gap-8"
-    >
+    <div class="grid lg:grid-cols-3 gap-8">
 
-        <div
-            class="lg:col-span-2"
-        >
+        <div class="mb-6">
 
-            <div
-                class="rounded-xl border p-6"
+            <select wire:change="changeStatus($event.target.value)"
+                    class="rounded-lg border"
             >
+                @foreach(
+                    PatientStatus::cases()
+                    as $status
+                )
 
-                <h2
-                    class="mb-6 text-lg font-semibold"
-                >
+                    <option
+                        value="{{ $status->value }}"
+                        @selected(
+                            $patient->status === $status
+                        )
+                    >
+
+                        {{ str(
+                            $status->name
+                        )->headline() }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
+        <div class="lg:col-span-2">
+
+            <div class="rounded-xl border p-6">
+
+                <h2 class="mb-6 text-lg font-semibold">
                     Timeline
                 </h2>
 
-                <div
-                    class="space-y-4"
-                >
+                <div class="space-y-4">
 
                     @foreach(
                         $patient->activityLogs
