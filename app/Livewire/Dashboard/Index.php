@@ -34,6 +34,13 @@ class Index extends Component
             ->limit(8)
             ->get();
 
+        $patientsFollowUp = Patient::query()
+            ->where('clinic_id', $clinicId)
+            ->where('status', PatientStatus::FollowUp)
+            ->latest('updated_at')
+            ->limit(5)
+            ->get();
+
         $todayAppointments = Appointment::query()
             ->where('clinic_id', $clinicId)
             ->whereDate('starts_at', today())
@@ -71,6 +78,7 @@ class Index extends Component
             compact(
                 'activePatients',
                 'patientsNeedingAttention',
+                'patientsFollowUp',
                 'todayAppointments',
                 'followUps',
                 'recentActivity',

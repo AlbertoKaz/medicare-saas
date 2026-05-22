@@ -65,15 +65,13 @@
             <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm lg:col-span-2">
 
                 <div class="flex items-center justify-between">
-
                     <h2 class="text-lg font-semibold text-gray-900">
                         Today's appointments
                     </h2>
 
                     <span class="text-sm text-gray-500">
-            {{ $appointmentsTodayList->count() }} scheduled
-        </span>
-
+                        {{ $appointmentsTodayList->count() }} scheduled
+                    </span>
                 </div>
 
                 {{-- Appointments Today List --}}
@@ -162,6 +160,83 @@
                         </p>
                     @endforelse
                 </div>
+            </div>
+
+
+            {{--  Patients Follow Up --}}
+            <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <h2 class="text-lg font-semibold text-slate-900">
+                            Patients requiring follow-up
+                        </h2>
+
+                        <p class="mt-1 text-sm text-slate-500">
+                            Patients waiting for next clinical action.
+                        </p>
+
+                    </div>
+
+                    <span
+                        class="rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700"
+                    >
+            {{ $patientsFollowUp->count() }}
+        </span>
+
+                </div>
+
+                <div class="mt-6 divide-y divide-slate-100">
+
+                    @forelse($patientsFollowUp as $patient)
+
+                        <a
+                            href="{{ route('patients.show', $patient) }}"
+                            class="flex items-center justify-between py-4 transition hover:bg-slate-50"
+                        >
+
+                            <div>
+
+                                <p class="font-medium text-slate-900">
+                                    {{ $patient->full_name }}
+                                </p>
+
+                                <p class="mt-1 text-sm text-purple-600">
+                                    Follow up required
+                                </p>
+
+                            </div>
+
+                            <div class="text-right">
+
+                                <p class="text-xs text-slate-500">
+                                    Updated
+                                </p>
+
+                                <p class="text-sm font-medium text-slate-700">
+                                    {{ $patient->updated_at->diffForHumans() }}
+                                </p>
+
+                            </div>
+
+                        </a>
+
+                    @empty
+
+                        <div class="py-8 text-center">
+
+                            <p class="text-sm text-slate-500">
+                                No follow ups pending.
+                            </p>
+
+                        </div>
+
+                    @endforelse
+
+                </div>
+
             </div>
 
             {{-- Patients Needing Attention --}}
