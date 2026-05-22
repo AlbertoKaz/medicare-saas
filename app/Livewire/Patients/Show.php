@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Patients;
 
+use App\Models\ClinicalNote;
 use App\Models\Patient;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -11,6 +12,7 @@ use App\Enums\PatientStatus;
 class Show extends Component
 {
     public Patient $patient;
+    public bool $canViewClinicalNotes = false;
 
     public function mount(Patient $patient): void
     {
@@ -23,7 +25,12 @@ class Show extends Component
             'assignedDoctor',
             'appointments',
             'activityLogs.actor',
+            'clinicalNotes.author',
         ]);
+
+        $this->canViewClinicalNotes = auth()
+            ->user()
+            ->can('viewAny', ClinicalNote::class);
     }
 
     public function changeStatus(
