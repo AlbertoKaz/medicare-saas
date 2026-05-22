@@ -39,15 +39,13 @@
             </select>
         </div>
 
+        {{-- Activity Logs --}}
         <div class="lg:col-span-2">
 
             <div class="rounded-xl border p-6">
                 <h2 class="mb-6 text-lg font-semibold">Timeline</h2>
                 <div class="space-y-4">
-                    @foreach($patient->activityLogs
-                            ->sortByDesc('created_at')
-                        as $activity
-                    )
+                    @foreach($this->visibleActivities() as $activity)
                         <div class="border-l-2 pl-4">
                             <div class="font-medium">
                                 {{ str($activity->event->value)->headline() }}

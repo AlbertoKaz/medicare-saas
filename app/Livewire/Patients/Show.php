@@ -48,6 +48,29 @@ class Show extends Component
         $this->patient->refresh();
     }
 
+    public function visibleActivities()
+    {
+        $user = auth()->user();
+
+        return $this->patient
+            ->activityLogs
+            ->filter(function ($activity) use ($user) {
+                if ($activity->visibility->isOperational()) {
+                    return true;
+                }
+
+                if ($activity->visibility->isClinical()) {
+                    return $user->can(
+                        'viewAny',
+                        ClinicalNote::class
+                    );
+                }
+
+                return false;
+            })
+            ->sortByDesc('created_at');
+    }
+
     public function render(): View
     {
         return view(
