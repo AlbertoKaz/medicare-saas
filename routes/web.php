@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Dashboard\Index as DashboardIndex;
 use App\Livewire\ClinicalNotes\Create as CreateClinicalNote;
 use App\Livewire\Patients\Create;
 use App\Livewire\Patients\Show as ShowPatient;
@@ -14,7 +15,10 @@ Route::middleware([
     'current.clinic',
     ])->group(function () {
 
-    Route::view('dashboard', 'dashboard')
+    /*Route::view('dashboard', 'dashboard')
+        ->name('dashboard');*/
+
+    Route::get('/dashboard', DashboardIndex::class)
         ->name('dashboard');
 
     Route::get('/patients/create', Create::class)
