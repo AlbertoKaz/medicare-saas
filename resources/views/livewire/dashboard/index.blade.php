@@ -110,6 +110,7 @@
             </div>
         </div>
 
+        {{-- Recent Activity --}}
         <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
             <h2 class="text-lg font-semibold text-gray-900">
                 Recent activity
@@ -119,7 +120,7 @@
                 @forelse($recentActivity as $activity)
                     <div class="border-l-2 border-blue-200 pl-4">
                         <p class="text-sm font-medium text-gray-900">
-                            {{ str($activity->event_type->value)->replace('_', ' ')->title() }}
+                            {{ str($activity->event->value)->replace('_', ' ')->title() }}
                         </p>
 
                         <p class="text-xs text-gray-500">
@@ -134,6 +135,68 @@
             </div>
         </div>
 
+        {{-- Patients Needing Attention--}}
+        <div class="mt-8 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+
+            <div class="flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Patients needing attention
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Patients currently waiting or requiring follow-up.
+                    </p>
+                </div>
+
+                <span class="text-sm text-gray-500">
+            {{ $patientsNeedingAttention->count() }} patients
+        </span>
+            </div>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+                @forelse($patientsNeedingAttention as $patient)
+
+                    <a
+                        href="{{ route('patients.show', $patient) }}"
+                        class="rounded-lg border border-gray-100 p-4 transition hover:border-blue-200 hover:bg-blue-50/40">
+
+                        <div class="flex items-start justify-between gap-4">
+
+                            <div>
+                                <p class="font-medium text-gray-900">
+                                    {{ $patient->full_name }}
+                                </p>
+
+                                <p class="mt-1 text-sm text-gray-500">
+                                    {{ str($patient->status->value)
+                                        ->replace('_', ' ')
+                                        ->title() }}
+                                </p>
+                            </div>
+
+                            <span class="rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700">
+                        {{ $patient->updated_at->diffForHumans() }}
+                    </span>
+
+                        </div>
+
+                    </a>
+
+                @empty
+
+                    <div class="rounded-lg border border-dashed p-8 text-center sm:col-span-2 lg:col-span-4">
+                        <p class="text-sm text-gray-500">
+                            No patients need attention right now.
+                        </p>
+                    </div>
+
+                @endforelse
+
+            </div>
+
+        </div>
     </div>
 
 </div>

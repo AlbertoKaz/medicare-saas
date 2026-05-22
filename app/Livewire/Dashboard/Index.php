@@ -24,6 +24,16 @@ class Index extends Component
             ])
             ->count();
 
+        $patientsNeedingAttention = Patient::query()
+            ->where('clinic_id', $clinicId)
+            ->whereIn('status', [
+                PatientStatus::FollowUp,
+                PatientStatus::Waiting,
+            ])
+            ->orderBy('updated_at')
+            ->limit(8)
+            ->get();
+
         $todayAppointments = Appointment::query()
             ->where('clinic_id', $clinicId)
             ->whereDate('starts_at', today())
@@ -60,6 +70,7 @@ class Index extends Component
             'livewire.dashboard.index',
             compact(
                 'activePatients',
+                'patientsNeedingAttention',
                 'todayAppointments',
                 'followUps',
                 'recentActivity',
