@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
+Route::view('/no-clinic', 'auth.no-clinic')
+    ->middleware(['auth', 'verified'])
+    ->name('no-clinic');
+
 Route::middleware([
     'auth',
     'verified',
     'current.clinic',
     ])->group(function () {
-
-    /*Route::view('dashboard', 'dashboard')
-        ->name('dashboard');*/
 
     Route::get('/dashboard', DashboardIndex::class)
         ->name('dashboard');
