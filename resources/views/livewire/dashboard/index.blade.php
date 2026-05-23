@@ -7,7 +7,7 @@
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
         <div class="mb-8">
-            <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+            <h1 class="text-4xl font-bold tracking-tight text-slate-900">
                 Clinic overview
             </h1>
 
@@ -28,32 +28,32 @@
                 </p>
             </div>
 
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
                 <p class="text-sm font-medium text-gray-500">
                     Appointments today
                 </p>
 
-                <p class="mt-2 text-3xl font-semibold text-gray-900">
+                <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900">
                     {{ $todayAppointments }}
                 </p>
             </div>
 
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
                 <p class="text-sm font-medium text-gray-500">
                     Pending follow-ups
                 </p>
 
-                <p class="mt-2 text-3xl font-semibold text-gray-900">
+                <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900">
                     {{ $followUps }}
                 </p>
             </div>
 
-            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
                 <p class="text-sm font-medium text-gray-500">
                     Recent activity
                 </p>
 
-                <p class="mt-2 text-3xl font-semibold text-gray-900">
+                <p class="mt-2 text-4xl font-semibold tracking-tight text-gray-900">
                     {{ $recentActivity->count() }}
                 </p>
             </div>
@@ -62,7 +62,7 @@
 
         <div class="mt-8 grid gap-6 lg:grid-cols-3">
 
-            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm lg:col-span-2">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 lg:col-span-2">
 
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-900">
@@ -115,7 +115,7 @@
             </div>
 
             {{-- Recent Activity --}}
-            <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
                 <h2 class="text-lg font-semibold text-gray-900">
                     Recent activity
                 </h2>
@@ -240,7 +240,7 @@
             </div>
 
             {{-- Patients Needing Attention --}}
-            <div class="mt-8 rounded-2xl lg:col-span-2 border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
+            <div class="rounded-2xl lg:col-span-2 border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
 
                 <div class="flex items-center justify-between">
                     <div>
