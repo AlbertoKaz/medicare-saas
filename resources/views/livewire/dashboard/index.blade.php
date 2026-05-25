@@ -7,15 +7,73 @@
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
         <div class="mb-8">
-            <h1 class="text-4xl font-bold tracking-tight text-slate-900">
-                Clinic overview
+            <h1 class="text-3xl font-bold tracking-tight text-slate-950">
+                Dashboard
             </h1>
 
             <p class="mt-2 text-sm text-slate-500">
-                Today’s operational overview for {{ currentClinic()->name }}.
+                Operational overview for {{ currentClinic()->name }}
             </p>
         </div>
 
+        {{-- Menú --}}
+        <div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+            <a
+                href="{{ route('patients.index') }}"
+                class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 transition hover:border-blue-200 hover:bg-blue-50/40"
+            >
+                <p class="text-sm font-semibold text-slate-900">
+                    Patients
+                </p>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    View and manage patient records.
+                </p>
+            </a>
+
+            <a
+                href="{{ route('patients.create') }}"
+                class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 transition hover:border-blue-200 hover:bg-blue-50/40"
+            >
+                <p class="text-sm font-semibold text-slate-900">
+                    New patient
+                </p>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Register a new patient.
+                </p>
+            </a>
+
+            <a
+                href="#today-appointments"
+                class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 transition hover:border-blue-200 hover:bg-blue-50/40"
+            >
+                <p class="text-sm font-semibold text-slate-900">
+                    Today’s appointments
+                </p>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Review scheduled visits.
+                </p>
+            </a>
+
+            <a
+                href="#patients-attention"
+                class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/60 transition hover:border-blue-200 hover:bg-blue-50/40"
+            >
+                <p class="text-sm font-semibold text-slate-900">
+                    Needs attention
+                </p>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Check patients requiring action.
+                </p>
+            </a>
+
+        </div>
+
+        {{-- 4 KPI --}}
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
@@ -60,7 +118,8 @@
 
         </div>
 
-        <div class="mt-8 grid gap-6 lg:grid-cols-3">
+        <div id="today-appointments"
+            class="mt-8 grid gap-6 lg:grid-cols-3">
 
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60 lg:col-span-2">
 
@@ -135,18 +194,22 @@
 
                         <div
                             @class([
-                                'border-l-2 pl-4',
-                                'border-blue-300'
+                                'absolute left-0 top-1 h-3 w-3 rounded-full',
+
+                                'bg-blue-500'
                                     => $activity->visibility->isOperational(),
-                                'border-emerald-300'
+
+                                'bg-emerald-500'
                                     => $activity->visibility->isClinical(),
-                                'border-amber-300'
+
+                                'bg-amber-500'
                                     => $activity->visibility->isPrivate(),
-                                'border-zinc-300'
+
+                                'bg-slate-400'
                                     => $activity->visibility->isSystem(),
                             ])
                         >
-                            <p class="text-sm font-medium text-gray-900">
+                            <p class="text-sm font-medium text-slate-900">
                                 {{ str($activity->event->value)->replace('_', ' ')->title() }}
                             </p>
 
@@ -181,7 +244,7 @@
                     </div>
 
                     <span
-                        class="rounded-full bg-purple-100 px-3 py-1 text-sm font-medium text-purple-700"
+                        class="rounded-full bg-violet-100 px-3 py-1 text-sm font-medium text-purple-700"
                     >
             {{ $patientsFollowUp->count() }}
         </span>
@@ -240,7 +303,8 @@
             </div>
 
             {{-- Patients Needing Attention --}}
-            <div class="rounded-2xl lg:col-span-2 border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
+            <div id="patients-attention"
+                class="rounded-2xl lg:col-span-2 border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
 
                 <div class="flex items-center justify-between">
                     <div>
@@ -254,8 +318,8 @@
                     </div>
 
                     <span class="text-sm text-slate-500">
-            {{ $patientsNeedingAttention->count() }} patients
-        </span>
+                        {{ $patientsNeedingAttention->count() }} patients
+                    </span>
                 </div>
 
                 <div class="mt-6 divide-y divide-slate-100">
