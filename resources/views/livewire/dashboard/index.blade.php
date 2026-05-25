@@ -1,5 +1,6 @@
 @php
     use App\Enums\PatientStatus;
+    use App\Enums\ClinicRole;
 @endphp
 
 <div class="min-h-screen bg-slate-50">
@@ -14,6 +15,43 @@
             <p class="mt-2 text-sm text-slate-500">
                 Operational overview for {{ currentClinic()->name }}
             </p>
+
+            @php
+                $membership = auth()
+                    ->user()
+                    ->clinicMemberships()
+                    ->where(
+                        'clinic_id',
+                        currentClinic()->id
+                    )
+                    ->first();
+            @endphp
+
+            @if($membership)
+
+                <span
+                    @class([
+
+                        'inline-flex rounded-full px-3 py-1 text-xs font-semibold',
+
+                        'bg-violet-100 text-violet-700'
+                            => $membership->role === ClinicRole::Owner,
+
+                        'bg-blue-100 text-blue-700'
+                            => $membership->role === ClinicRole::Admin,
+
+                        'bg-emerald-100 text-emerald-700'
+                            => $membership->role === ClinicRole::Doctor,
+
+                        'bg-amber-100 text-amber-700'
+                            => $membership->role === ClinicRole::Assistant,
+
+                            ])
+                        >
+                    {{ str($membership->role->value)->headline() }}
+                </span>
+
+            @endif
         </div>
 
         {{-- Menú --}}
@@ -175,56 +213,50 @@
 
             {{-- Recent Activity --}}
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
-                <h2 class="text-lg font-semibold text-gray-900">
+                <h2 class="text-lg font-semibold text-slate-900">
                     Recent activity
                 </h2>
 
-                <div class="mt-4 space-y-4">
+                <div class="mt-5 space-y-5">
                     @forelse($recentActivity as $activity)
-                        {{-- Icons --}}
-                        @php
-                            $icon = match($activity->event) {
-                                'patient_created' => 'P',
-                                'appointment_scheduled' => 'A',
-                                'patient_status_changed' => 'S',
-                                'clinical_note_added' => 'N',
-                                default => '·',
-                            };
-                        @endphp
 
-                        <div
-                            @class([
-                                'absolute left-0 top-1 h-3 w-3 rounded-full',
+                        <div class="relative pl-6">
+                            <div
+                                @class([
+                                    'absolute left-0 top-1 h-3 w-3 rounded-full',
 
-                                'bg-blue-500'
-                                    => $activity->visibility->isOperational(),
+                                    'bg-blue-500'
+                                        => $activity->visibility->isOperational(),
 
-                                'bg-emerald-500'
-                                    => $activity->visibility->isClinical(),
+                                    'bg-emerald-500'
+                                        => $activity->visibility->isClinical(),
 
-                                'bg-amber-500'
-                                    => $activity->visibility->isPrivate(),
+                                    'bg-amber-500'
+                                        => $activity->visibility->isPrivate(),
 
-                                'bg-slate-400'
-                                    => $activity->visibility->isSystem(),
-                            ])
-                        >
-                            <p class="text-sm font-medium text-slate-900">
+                                    'bg-slate-400'
+                                        => $activity->visibility->isSystem(),
+                                ])
+                            ></div>
+
+                            <p class="text-sm font-semibold text-slate-900">
                                 {{ str($activity->event->value)->replace('_', ' ')->title() }}
                             </p>
 
-                            <p class="text-xs text-gray-500">
+                            <p class="mt-1 text-xs text-slate-500">
+                                {{ $activity->actor?->name ?? 'System' }}
+                                ·
                                 {{ $activity->created_at->diffForHumans() }}
                             </p>
                         </div>
+
                     @empty
-                        <p class="text-sm text-gray-500">
+                        <p class="text-sm text-slate-500">
                             No recent activity yet.
                         </p>
                     @endforelse
                 </div>
             </div>
-
 
             {{--  Patients Follow Up --}}
             <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
