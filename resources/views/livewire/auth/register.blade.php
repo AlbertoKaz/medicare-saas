@@ -1,3 +1,4 @@
+{{--
 <x-layouts::auth :title="__('Register')">
     <div class="flex flex-col gap-6">
         <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
@@ -67,3 +68,4 @@
         </div>
     </div>
 </x-layouts::auth>
+--}}
