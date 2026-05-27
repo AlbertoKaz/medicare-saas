@@ -31,10 +31,21 @@
         <a
             href="{{ route('dashboard') }}"
             wire:navigate
-            class="flex items-center gap-3 px-1"
+            class="
+        flex items-center gap-3 px-1
+
+        bg-white!
+        hover:bg-white!
+        focus:bg-white!
+        active:bg-white!
+
+        shadow-none!
+        ring-0!
+        outline-none!
+    "
         >
             <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
-                <i class="fa-solid fa-staff-snake text-sm"></i>
+                <i class="fa-solid fa-user-doctor text-sm"></i>
             </div>
 
             <div>
@@ -135,7 +146,7 @@
 
     <div class="flex items-center gap-2">
         <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
-            <i class="fa-solid fa-staff-snake text-xs"></i>
+            <i class="fa-solid fa-user-doctor text-xs"></i>
         </div>
 
         <span class="text-sm font-bold text-slate-950">
@@ -149,15 +160,63 @@
         <flux:profile
             :initials="auth()->user()->initials()"
             icon-trailing="chevron-down"
+            class="
+        **:data-flux-avatar:bg-blue-50!
+        **:data-flux-avatar:text-blue-700!
+        **:data-flux-avatar:border!
+        **:data-flux-avatar:border-blue-100!
+        **:data-flux-avatar:shadow-none!
+    "
         />
 
-        <flux:menu>
+        <flux:menu
+            class="
+        w-72!
+        rounded-2xl!
+        border!
+        border-slate-200!
+        bg-white!
+        p-2!
+        text-slate-700!
+        shadow-xl!
+        shadow-slate-200/70!
+
+        **:text-slate-700!
+
+        **:data-flux-heading:text-slate-950!
+        **:data-flux-text:text-slate-500!
+
+        **:data-flux-avatar:bg-blue-50!
+        **:data-flux-avatar:text-blue-700!
+        **:data-flux-avatar:border!
+        **:data-flux-avatar:border-blue-100!
+
+        **:data-flux-menu-item:rounded-xl!
+        **:data-flux-menu-item:px-3!
+        **:data-flux-menu-item:py-2!
+        **:data-flux-menu-item:text-slate-700!
+
+        [&_[data-flux-menu-item]:hover]:bg-blue-50!
+        [&_[data-flux-menu-item]:hover]:text-blue-600!
+
+        **:data-flux-menu-separator:my-2!
+        [data-flux-menu-separator]:bg-slate-100!
+        **:data-flux-menu-item:transition-colors
+    "
+        >
             <flux:menu.radio.group>
                 <div class="p-0 text-sm font-normal">
                     <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
                         <flux:avatar
                             :name="auth()->user()->name"
                             :initials="auth()->user()->initials()"
+                            class="
+                            bg-blue-50!
+                            text-blue-700!
+                            border!
+                            border-blue-100!
+                            shadow-none!
+                            "
                         />
 
                         <div class="grid flex-1 text-start text-sm leading-tight">
@@ -173,15 +232,11 @@
                 </div>
             </flux:menu.radio.group>
 
-            <flux:menu.separator />
-
             <flux:menu.radio.group>
                 <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
                     Settings
                 </flux:menu.item>
             </flux:menu.radio.group>
-
-            <flux:menu.separator />
 
             <form method="POST" action="{{ route('logout') }}" class="w-full">
                 @csrf

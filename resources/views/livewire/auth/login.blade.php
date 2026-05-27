@@ -41,7 +41,7 @@
         {{-- Brand header --}}
         <div class="text-center">
             <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-sm shadow-blue-200">
-                <i class="fa-solid fa-staff-snake text-lg"></i>
+                <i class="fa-solid fa-user-doctor text-lg"></i>
             </div>
 
             <p class="mt-5 text-sm font-semibold text-blue-600">
