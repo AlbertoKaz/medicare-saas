@@ -58,8 +58,6 @@
                 </p>
             </div>
         </a>
-
-        <flux:sidebar.collapse class="lg:hidden" />
     </flux:sidebar.header>
 
     <flux:sidebar.nav>
@@ -67,30 +65,45 @@
             heading="Platform"
             class="grid">
             <flux:sidebar.item
-                icon="layout-grid"
                 :href="route('dashboard')"
                 :current="request()->routeIs('dashboard')"
                 wire:navigate
             >
-                Dashboard
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-table-columns text-sm"></i>
+
+                    <span>
+                        Dashboard
+                    </span>
+                </div>
             </flux:sidebar.item>
 
             <flux:sidebar.item
-                icon="users"
                 :href="route('patients.index')"
                 :current="request()->routeIs('patients.index') || request()->routeIs('patients.show')"
                 wire:navigate
             >
-                Patients
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-users text-sm"></i>
+
+                    <span>
+                        Patients
+                    </span>
+                </div>
             </flux:sidebar.item>
 
             <flux:sidebar.item
-                icon="user-plus"
                 :href="route('patients.create')"
                 :current="request()->routeIs('patients.create')"
                 wire:navigate
             >
-                New patient
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-user-plus text-sm"></i>
+
+                    <span>
+                        New patient
+                    </span>
+                </div>
             </flux:sidebar.item>
         </flux:sidebar.group>
     </flux:sidebar.nav>
@@ -100,17 +113,42 @@
             heading="Operations"
             class="grid">
             <flux:sidebar.item
-                icon="calendar-days"
-                href="#"
+                href="#today-appointments"
+                :current="request()->routeIs('dashboard')"
             >
-                Appointments
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-calendar-check text-sm"></i>
+
+                    <span>
+                        Appointments
+                    </span>
+                </div>
             </flux:sidebar.item>
 
             <flux:sidebar.item
-                icon="bolt"
-                href="#"
+                href="#patients-attention"
+                :current="request()->routeIs('dashboard')"
             >
-                Activity
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-sm"></i>
+
+                    <span>
+                        Needs Attention
+                    </span>
+                </div>
+            </flux:sidebar.item>
+
+            <flux:sidebar.item
+                href="#recent-activity"
+                :current="request()->routeIs('dashboard')"
+            >
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-wave-square text-sm"></i>
+
+                    <span>
+                        Recent Activity
+                    </span>
+                </div>
             </flux:sidebar.item>
         </flux:sidebar.group>
     </flux:sidebar.nav>
@@ -142,7 +180,19 @@
 
 {{-- Mobile Header --}}
 <flux:header class="border-b border-slate-200 bg-white lg:hidden">
-    <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+    <flux:sidebar.toggle
+        class="
+        lg:hidden
+
+        text-slate-500!
+        hover:text-blue-600!
+
+        [&_svg]:text-slate-800!
+        hover:[&_svg]:text-blue-600!
+    "
+        icon="bars-2"
+        inset="left"
+    />
 
     <div class="flex items-center gap-2">
         <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white">
@@ -169,6 +219,7 @@
     "
         />
 
+        {{-- Menú inferior --}}
         <flux:menu
             class="
         w-72!
@@ -204,6 +255,7 @@
         **:data-flux-menu-item:transition-colors
     "
         >
+            {{-- Avatar --}}
             <flux:menu.radio.group>
                 <div class="p-0 text-sm font-normal">
                     <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
@@ -232,12 +284,14 @@
                 </div>
             </flux:menu.radio.group>
 
+            {{-- Edit Profile --}}
             <flux:menu.radio.group>
                 <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
                     Settings
                 </flux:menu.item>
             </flux:menu.radio.group>
 
+            {{-- Logout --}}
             <form method="POST" action="{{ route('logout') }}" class="w-full">
                 @csrf
 

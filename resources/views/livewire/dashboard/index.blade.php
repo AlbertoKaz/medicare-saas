@@ -292,7 +292,8 @@
             </div>
 
             {{-- Recent Activity --}}
-            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
+            <div id="recent-activity"
+                class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
                 <h2 class="text-lg font-semibold text-slate-950">
                     Recent activity
                 </h2>
