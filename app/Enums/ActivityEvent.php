@@ -8,4 +8,6 @@ enum ActivityEvent: string
     case AppointmentScheduled='appointment_scheduled';
     case ClinicalNoteAdded = 'clinical_note_added';
     case PatientStatusChanged = 'patient_status_changed';
+    case DoctorAssigned = 'doctor_assigned';
+    case DoctorUnassigned = 'doctor_unassigned';
 }

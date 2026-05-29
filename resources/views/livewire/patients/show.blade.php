@@ -82,9 +82,11 @@
             </div>
         </div>
 
-        {{-- Patient status --}}
+        {{-- Patient status / Assigned doctor --}}
         <div class="mb-8 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
-            <div class="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <div class="grid gap-6 lg:grid-cols-2">
+
+                {{-- Patient status --}}
                 <div>
                     <h2 class="text-base font-semibold text-slate-950">
                         Patient status
@@ -93,21 +95,57 @@
                     <p class="mt-1 text-sm text-slate-500">
                         Update the general lifecycle state of this patient case.
                     </p>
+
+                    <select
+                        wire:change="changeStatus($event.target.value)"
+                        class="mt-4 block h-11 w-full rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-900 shadow-sm transition focus:border-blue-500 focus:ring-blue-500"
+                    >
+                        @foreach(PatientStatus::cases() as $status)
+                            <option
+                                value="{{ $status->value }}"
+                                @selected($patient->status === $status)
+                            >
+                                {{ str($status->name)->headline() }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <select
-                    wire:change="changeStatus($event.target.value)"
-                    class="block h-10 w-full rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-900 shadow-sm transition focus:border-blue-500 focus:ring-blue-500 lg:max-w-xs"
-                >
-                    @foreach(PatientStatus::cases() as $status)
-                        <option
-                            value="{{ $status->value }}"
-                            @selected($patient->status === $status)
+                {{-- Assigned doctor --}}
+                <div>
+                    <h2 class="text-base font-semibold text-slate-950">
+                        Assigned doctor
+                    </h2>
+
+                    <p class="mt-1 text-sm text-slate-500">
+                        Assign the responsible doctor for this patient.
+                    </p>
+
+                    <div class="mt-4 flex gap-3">
+                        <select
+                            wire:model="assigned_doctor_id"
+                            class="block h-11 w-full rounded-2xl border border-slate-300 bg-white px-4 text-sm text-slate-900 shadow-sm transition focus:border-blue-500 focus:ring-blue-500"
                         >
-                            {{ str($status->name)->headline() }}
-                        </option>
-                    @endforeach
-                </select>
+                            <option value="">Unassigned</option>
+
+                            @foreach($doctors as $doctor)
+                                <option value="{{ $doctor->id }}">
+                                    {{ $doctor->name }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <button
+                            wire:click="assignDoctor"
+                            type="button"
+                            class="inline-flex shrink-0 items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+                        >
+                            <i class="fa-solid fa-user-doctor text-xs"></i>
+                            Assign
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -139,7 +177,7 @@
                             <div class="relative pb-6 pl-9 last:pb-0">
 
                                 @if(! $loop->last)
-                                    <div class="absolute left-[11px] top-6 h-full w-px bg-slate-200"></div>
+                                    <div class="absolute left-2.75 top-6 h-full w-px bg-slate-200"></div>
                                 @endif
 
                                 @php
@@ -148,6 +186,7 @@
                                         'appointment_scheduled' => 'fa-calendar-plus',
                                         'patient_status_changed' => 'fa-arrow-right-arrow-left',
                                         'clinical_note_added' => 'fa-notes-medical',
+                                        'doctor_assigned','doctor_unassigned' => 'fa-user-doctor',
                                         default => 'fa-circle',
                                     };
                                 @endphp

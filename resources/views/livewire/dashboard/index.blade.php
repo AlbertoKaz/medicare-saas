@@ -33,7 +33,8 @@
 
                 @if($membership)
                     <div class="flex flex-wrap items-center gap-3">
-                        <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
+                        <span
+                            class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
                             <i class="fa-solid fa-hospital text-slate-400"></i>
                             {{ currentClinic()->name }}
                         </span>
@@ -242,9 +243,11 @@
 
                 <div class="mt-6 space-y-3">
                     @forelse($appointmentsTodayList as $appointment)
-                        <div class="flex items-center justify-between gap-4 rounded-2xl border border-slate-100 p-4 transition hover:border-blue-100 hover:bg-blue-50/30">
+                        <div
+                            class="flex items-center justify-between gap-4 rounded-2xl border border-slate-100 p-4 transition hover:border-blue-100 hover:bg-blue-50/30">
                             <div class="flex items-center gap-4">
-                                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                                <div
+                                    class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
                                     <i class="fa-solid fa-calendar-check"></i>
                                 </div>
 
@@ -275,7 +278,8 @@
                         </div>
                     @empty
                         <div class="rounded-2xl border border-dashed border-slate-200 p-8 text-center">
-                            <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                            <div
+                                class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
                                 <i class="fa-solid fa-calendar-day"></i>
                             </div>
 
@@ -293,7 +297,7 @@
 
             {{-- Recent Activity --}}
             <div id="recent-activity"
-                class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
+                 class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200/60">
                 <h2 class="text-lg font-semibold text-slate-950">
                     Recent activity
                 </h2>
@@ -307,7 +311,7 @@
                         <div class="relative pb-6 pl-8 last:pb-0">
 
                             @if(! $loop->last)
-                                <div class="absolute left-[11px] top-5 h-full w-px bg-slate-200"></div>
+                                <div class="absolute left-2.75 top-5 h-full w-px bg-slate-200"></div>
                             @endif
 
                             <div
@@ -333,6 +337,7 @@
                                         'appointment_scheduled' => 'fa-calendar-plus',
                                         'patient_status_changed' => 'fa-arrow-right-arrow-left',
                                         'clinical_note_added' => 'fa-notes-medical',
+                                        'doctor_assigned','doctor_unassigned' => 'fa-user-doctor',
                                         default => 'fa-circle',
                                     };
                                 @endphp
@@ -352,7 +357,8 @@
                         </div>
                     @empty
                         <div class="rounded-2xl border border-dashed border-slate-200 p-6 text-center">
-                            <div class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                            <div
+                                class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-400">
                                 <i class="fa-solid fa-wave-square"></i>
                             </div>
 
@@ -412,7 +418,8 @@
                         </a>
                     @empty
                         <div class="py-8 text-center">
-                            <div class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                            <div
+                                class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-400">
                                 <i class="fa-solid fa-circle-check"></i>
                             </div>
 
@@ -498,7 +505,8 @@
                         </a>
                     @empty
                         <div class="rounded-2xl border border-dashed border-slate-200 p-8 text-center">
-                            <div class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-400">
+                            <div
+                                class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 text-slate-400">
                                 <i class="fa-solid fa-circle-check"></i>
                             </div>
 

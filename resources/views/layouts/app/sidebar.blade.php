@@ -67,7 +67,6 @@
             <flux:sidebar.item
                 :href="route('dashboard')"
                 :current="request()->routeIs('dashboard')"
-                wire:navigate
             >
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-table-columns text-sm"></i>
@@ -81,7 +80,6 @@
             <flux:sidebar.item
                 :href="route('patients.index')"
                 :current="request()->routeIs('patients.index') || request()->routeIs('patients.show')"
-                wire:navigate
             >
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-users text-sm"></i>
@@ -95,7 +93,6 @@
             <flux:sidebar.item
                 :href="route('patients.create')"
                 :current="request()->routeIs('patients.create')"
-                wire:navigate
             >
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-user-plus text-sm"></i>
@@ -113,7 +110,7 @@
             heading="Operations"
             class="grid">
             <flux:sidebar.item
-                href="#today-appointments"
+                :href="route('dashboard') . '#today-appointments'"
                 :current="request()->routeIs('dashboard')"
             >
                 <div class="flex items-center gap-3">
@@ -126,7 +123,7 @@
             </flux:sidebar.item>
 
             <flux:sidebar.item
-                href="#patients-attention"
+                :href="route('dashboard') . '#patients-attention'"
                 :current="request()->routeIs('dashboard')"
             >
                 <div class="flex items-center gap-3">
@@ -139,7 +136,7 @@
             </flux:sidebar.item>
 
             <flux:sidebar.item
-                href="#recent-activity"
+                :href="route('dashboard') . '#recent-activity'"
                 :current="request()->routeIs('dashboard')"
             >
                 <div class="flex items-center gap-3">

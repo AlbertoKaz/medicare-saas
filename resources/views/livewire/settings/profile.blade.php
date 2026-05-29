@@ -1,4 +1,4 @@
-<section class="w-full">
+<section class="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
     @include('partials.settings-heading')
 
     <flux:heading class="sr-only">{{ __('Profile settings') }}</flux:heading>

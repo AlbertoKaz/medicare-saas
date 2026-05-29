@@ -2,8 +2,11 @@
 
 namespace App\Livewire\Patients;
 
+use App\Actions\Patients\AssignDoctor;
+use App\Enums\ClinicRole;
 use App\Models\ClinicalNote;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use App\Actions\Patients\ChangePatientStatus;
@@ -13,6 +16,7 @@ class Show extends Component
 {
     public Patient $patient;
     public bool $canViewClinicalNotes = false;
+    public ?int $assigned_doctor_id = null;
 
     public function mount(Patient $patient): void
     {
@@ -27,6 +31,8 @@ class Show extends Component
             'activityLogs.actor',
             'clinicalNotes.author',
         ]);
+
+        $this->assigned_doctor_id = $this->patient->assigned_doctor_id;
 
         $this->canViewClinicalNotes = auth()
             ->user()
@@ -71,10 +77,48 @@ class Show extends Component
             ->sortByDesc('created_at');
     }
 
+    public function assignDoctor(AssignDoctor $assignDoctor): void
+    {
+        $validated = $this->validate([
+            'assigned_doctor_id' => [
+                'nullable',
+                'exists:users,id',
+            ],
+        ]);
+
+        $doctor = null;
+
+        if ($validated['assigned_doctor_id']) {
+            $doctor = User::query()
+                ->whereHas('clinicMemberships', function ($query) {
+                    $query
+                        ->where('clinic_id', currentClinic()->id)
+                        ->where('role', ClinicRole::Doctor);
+                })
+                ->findOrFail($validated['assigned_doctor_id']);
+        }
+
+        $this->patient = $assignDoctor->handle(
+            clinic: currentClinic(),
+            actor: auth()->user(),
+            patient: $this->patient,
+            doctor: $doctor,
+        );
+
+        session()->flash('success', 'Doctor assigned successfully.');
+    }
+
     public function render(): View
     {
-        return view(
-            'livewire.patients.show'
-        );
+        return view('livewire.patients.show', [
+            'doctors' => User::query()
+                ->whereHas('clinicMemberships', function ($query) {
+                    $query
+                        ->where('clinic_id', currentClinic()->id)
+                        ->where('role', ClinicRole::Doctor);
+                })
+                ->orderBy('name')
+                ->get(),
+        ]);
     }
 }
