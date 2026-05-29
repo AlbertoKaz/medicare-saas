@@ -74,7 +74,8 @@ class Show extends Component
 
                 return false;
             })
-            ->sortByDesc('created_at');
+            ->sortByDesc('created_at')
+            ->take(5);
     }
 
     public function assignDoctor(AssignDoctor $assignDoctor): void
